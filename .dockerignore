@@ -1,0 +1,56 @@
+# Dependencies (installed fresh in Docker)
+node_modules/
+server/node_modules/
+client/node_modules/
+core/node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+server/.env
+server/.env.*
+client/.env
+client/.env.*
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test artifacts
+playwright-report/
+test-results/
+tests/
+
+# Documentation & config not needed in image
+*.md
+claude.md
+implementation.md
+project.md
+tech-stack.md
+Knowledge-base.md
+railway.toml
+docker-compose.yml
+playwright.config.ts
+skills-lock.json
+
+# Agent configs
+.agents/
+
+# Misc
+server/cookies.txt
+server/scripts/

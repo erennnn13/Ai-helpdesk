@@ -1,0 +1,23 @@
+# Railway monorepo configuration
+# This project deploys as two separate services:
+#   1. Server (backend API) - uses server/Dockerfile
+#   2. Client (frontend)    - uses client/Dockerfile
+#
+# Setup in Railway:
+#   - Create a new project from this repo
+#   - Add a PostgreSQL plugin (auto-provides DATABASE_URL)
+#   - Create two services, each pointing to the respective Dockerfile
+#   - Set BACKEND_URL on the client service to the server's internal Railway URL
+#
+# Required environment variables for the Server service:
+#   DATABASE_URL          (auto from Railway Postgres)
+#   BETTER_AUTH_SECRET    (random secret: openssl rand -hex 32)
+#   BETTER_AUTH_URL       (server's public URL)
+#   CLIENT_URL            (client's public URL)
+#   GEMINI_API_KEY        (Google AI key)
+#   NODE_ENV=production
+#   ADMIN_EMAIL           (seed admin)
+#   ADMIN_PASSWORD        (seed admin)
+#
+# Required environment variables for the Client service:
+#   BACKEND_URL           (server's Railway internal URL, e.g. http://server.railway.internal:3001)

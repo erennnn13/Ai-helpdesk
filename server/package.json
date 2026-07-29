@@ -1,0 +1,57 @@
+{
+  "name": "server",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "start:prod": "bun prisma db push --skip-generate && bun run src/index.ts",
+    "postinstall": "bun prisma generate",
+    "db:migrate": "bun prisma migrate dev",
+    "db:push": "bun prisma db push",
+    "db:seed": "bun run prisma/seed.ts",
+    "db:studio": "bun prisma studio",
+    "db:generate": "bun prisma generate"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-rate-limit": "^6.0.2",
+    "@types/mailparser": "^3.4.6",
+    "@types/node": "^26.1.1",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pg": "^8.20.0",
+    "@types/supertest": "^7.2.1",
+    "prisma": "^7.8.0",
+    "supertest": "^7.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^4.0.21",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "@sentry/node": "^10.68.0",
+    "ai": "^7.0.34",
+    "bcryptjs": "^3.0.3",
+    "better-auth": "^1.6.23",
+    "core": "file:../core",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.0",
+    "helmet": "^8.3.0",
+    "mailparser": "^3.9.14",
+    "nodemailer": "^6.10.0",
+    "pg": "^8.22.0",
+    "pg-boss": "^12.26.3",
+    "postmark": "^5.1.0"
+  },
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  }
+}

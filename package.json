@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start:server:test": "cd server && cross-env NODE_ENV=test npx dotenv -e .env.test -- bun run src/index.ts",
+    "start:client:test": "cd client && npm run dev",
+    "db:push:test": "cd server && npx dotenv -e .env.test -- bun prisma db push",
+    "db:setup:test": "cd server && npx dotenv -e .env.test -- bun prisma migrate reset --force && npx dotenv -e .env.test -- bun run prisma/seed.ts",
+    "test:e2e": "npx playwright test"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.23",
+    "ngrok": "^5.0.0-beta.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
+    "dotenv-cli": "^11.0.0"
+  }
+}
