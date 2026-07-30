@@ -37,6 +37,9 @@ COPY core/ core/
 COPY server/ server/
 COPY --from=install /app/server/node_modules server/node_modules
 
+# Copy Knowledge-base.md
+COPY Knowledge-base.md ./
+
 WORKDIR /app/server
 
 # Generate Prisma client
