@@ -1,8 +1,20 @@
--- AlterEnum: Add 'NEW' and 'PROCESSING' values to TicketStatus
--- These were missing from the original migration but present in schema.prisma
+-- AlterEnum: Add 'NEW' and 'PROCESSING' to TicketStatus
+-- Uses create-new-enum + swap approach (safe inside transactions)
 
-ALTER TYPE "TicketStatus" ADD VALUE IF NOT EXISTS 'NEW';
-ALTER TYPE "TicketStatus" ADD VALUE IF NOT EXISTS 'PROCESSING';
+-- 1. Create new enum with all values
+CREATE TYPE "TicketStatus_new" AS ENUM ('NEW', 'PROCESSING', 'OPEN', 'RESOLVED', 'CLOSED');
 
--- AlterTable: Update default value from 'OPEN' to 'NEW'
+-- 2. Drop the column default (it references the old enum type)
+ALTER TABLE "Ticket" ALTER COLUMN "status" DROP DEFAULT;
+
+-- 3. Swap the column type to the new enum
+ALTER TABLE "Ticket"
+  ALTER COLUMN "status" TYPE "TicketStatus_new"
+  USING ("status"::text::"TicketStatus_new");
+
+-- 4. Drop the old enum and rename the new one
+DROP TYPE "TicketStatus";
+ALTER TYPE "TicketStatus_new" RENAME TO "TicketStatus";
+
+-- 5. Restore the default to 'NEW'
 ALTER TABLE "Ticket" ALTER COLUMN "status" SET DEFAULT 'NEW';
