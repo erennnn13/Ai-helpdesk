@@ -63,19 +63,15 @@ function getTransporter(): nodemailer.Transporter | null {
   if (transporter !== null) return transporter;
   // Not yet created — build from env
   if (!SMTP_HOST) return null;
-  if (SMTP_HOST.includes("gmail")) {
-    transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
-  } else {
-    transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: SMTP_PORT,
-      secure: SMTP_PORT === 465,
-      auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
-    });
-  }
+
+  transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465, // true for 465, false for 587
+    requireTLS: SMTP_PORT === 587, // force STARTTLS for 587
+    auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
+  });
+
   return transporter;
 }
 
