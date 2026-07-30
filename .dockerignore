@@ -42,7 +42,9 @@ claude.md
 implementation.md
 project.md
 tech-stack.md
-Knowledge-base.md
+
+# Allow Knowledge-base.md to be included in the image
+!Knowledge-base.md
 railway.toml
 docker-compose.yml
 playwright.config.ts
