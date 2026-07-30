@@ -30,7 +30,7 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [
-    process.env.CLIENT_URL || "http://localhost:5173",
+    process.env.FRONTEND_URL || "http://localhost:5173",
     "http://localhost:3001",
   ],
 });
