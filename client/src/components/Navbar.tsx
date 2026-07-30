@@ -12,7 +12,7 @@ export function Navbar() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          navigate("/login");
+          window.location.href = "/login";
         },
       },
     });

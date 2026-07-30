@@ -15,7 +15,7 @@ export default function Layout() {
 
   const handleLogout = async () => {
     await authClient.signOut();
-    navigate("/login");
+    window.location.href = "/login";
   };
 
   const role = (session?.user as any)?.role || "USER";
