@@ -62,14 +62,16 @@ export function Navbar() {
               </div>
 
               <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="hover:bg-black hover:text-white transition-colors"
-                  >
-                    Sign Out
-                  </Button>
+                <DialogTrigger
+                  render={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="hover:bg-black hover:text-white transition-colors"
+                    />
+                  }
+                >
+                  Sign Out
                 </DialogTrigger>
                 <DialogContent showCloseButton={false} className="sm:max-w-md py-6">
                   <DialogHeader>
@@ -79,8 +81,8 @@ export function Navbar() {
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter className="mt-4">
-                    <DialogClose asChild>
-                      <Button variant="outline">Cancel</Button>
+                    <DialogClose render={<Button variant="outline" />}>
+                      Cancel
                     </DialogClose>
                     <Button onClick={handleSignOut}>Sign Out</Button>
                   </DialogFooter>
