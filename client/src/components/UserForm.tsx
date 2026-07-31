@@ -19,7 +19,6 @@ export function UserForm({ initialData, onSuccess }: UserFormProps) {
   const {
     register,
     handleSubmit,
-    control,
     reset,
     setError,
     formState: { errors },
