@@ -30,3 +30,5 @@ test-results/
 
 # Misc
 server/cookies.txt
+*dump*.sql
+local_*.sql
