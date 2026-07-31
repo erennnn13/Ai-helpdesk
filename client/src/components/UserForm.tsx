@@ -1,11 +1,10 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema, updateUserSchema, type UpdateUserFormValues, Role } from "core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { User } from "./UserTable";
 
 interface UserFormProps {
@@ -100,25 +99,7 @@ export function UserForm({ initialData, onSuccess }: UserFormProps) {
         />
         {errors.password && <p className="text-sm text-destructive font-medium">{errors.password.message}</p>}
       </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Role</label>
-        <Controller
-          control={control}
-          name="role"
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger className={errors.role ? "border-destructive focus:ring-destructive" : ""}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={Role.AGENT}>Agent (Support)</SelectItem>
-                <SelectItem value={Role.ADMIN}>Admin</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
-        {errors.role && <p className="text-sm text-destructive font-medium">{errors.role.message}</p>}
-      </div>
+
       <div className="pt-4 flex justify-end">
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? (isEditing ? "Saving..." : "Creating...") : (isEditing ? "Save Changes" : "Create User")}
