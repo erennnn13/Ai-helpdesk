@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { authClient } from "../lib/auth-client";
 import {
@@ -11,7 +11,7 @@ import { Logo } from "./Logo";
 
 export default function Layout() {
   const { session } = useAuth();
-  const navigate = useNavigate();
+
 
   const handleLogout = async () => {
     await authClient.signOut();

@@ -1,12 +1,11 @@
 import { useAuth } from "../context/AuthContext";
 import { authClient } from "../lib/auth-client";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 import { Role } from "core";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 export function Navbar() {
   const { session } = useAuth();
-  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await authClient.signOut({
