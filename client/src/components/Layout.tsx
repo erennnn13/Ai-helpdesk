@@ -7,6 +7,17 @@ import {
 } from "lucide-react";
 import { Role } from "core";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Logo } from "./Logo";
 
 export default function Layout() {
@@ -190,37 +201,54 @@ export default function Layout() {
             )}
 
             {/* Sign Out Button */}
-            <button
-              onClick={handleLogout}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "6px 12px",
-                fontSize: 12.5,
-                fontWeight: 500,
-                color: "#78716C",
-                background: "transparent",
-                border: "1px solid #E7E5E0",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "all 0.15s ease",
-                fontFamily: "'Instrument Sans Variable', sans-serif",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "#FEF2F2";
-                e.currentTarget.style.color = "#DC2626";
-                e.currentTarget.style.borderColor = "#FCA5A5";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#78716C";
-                e.currentTarget.style.borderColor = "#E7E5E0";
-              }}
-            >
-              <LogOut style={{ width: 13, height: 13 }} />
-              Sign out
-            </button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "6px 12px",
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                    color: "#78716C",
+                    background: "transparent",
+                    border: "1px solid #E7E5E0",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                    fontFamily: "'Instrument Sans Variable', sans-serif",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "#FEF2F2";
+                    e.currentTarget.style.color = "#DC2626";
+                    e.currentTarget.style.borderColor = "#FCA5A5";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = "#78716C";
+                    e.currentTarget.style.borderColor = "#E7E5E0";
+                  }}
+                >
+                  <LogOut style={{ width: 13, height: 13 }} />
+                  Sign out
+                </button>
+              </DialogTrigger>
+              <DialogContent showCloseButton={false} className="sm:max-w-md py-6">
+                <DialogHeader>
+                  <DialogTitle>Sign Out</DialogTitle>
+                  <DialogDescription>
+                    Are you sure you want to sign out?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="mt-4">
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button onClick={handleLogout}>Sign Out</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
           </div>
         </header>

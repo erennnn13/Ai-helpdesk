@@ -3,6 +3,16 @@ import { authClient } from "../lib/auth-client";
 import { Link } from "react-router";
 import { Role } from "core";
 import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function Navbar() {
   const { session } = useAuth();
@@ -51,14 +61,31 @@ export function Navbar() {
                 </div>
               </div>
 
-              <Button
-                onClick={handleSignOut}
-                variant="outline"
-                size="sm"
-                className="hover:bg-black hover:text-white transition-colors"
-              >
-                Sign Out
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="hover:bg-black hover:text-white transition-colors"
+                  >
+                    Sign Out
+                  </Button>
+                </DialogTrigger>
+                <DialogContent showCloseButton={false} className="sm:max-w-md py-6">
+                  <DialogHeader>
+                    <DialogTitle>Sign Out</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to sign out?
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="mt-4">
+                    <DialogClose asChild>
+                      <Button variant="outline">Cancel</Button>
+                    </DialogClose>
+                    <Button onClick={handleSignOut}>Sign Out</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           )}
         </div>
