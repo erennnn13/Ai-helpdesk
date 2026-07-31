@@ -4,6 +4,7 @@ import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
 
 export const auth = betterAuth({
+  baseURL: process.env.CLIENT_URL ? `${process.env.CLIENT_URL}/api/auth` : undefined,
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
