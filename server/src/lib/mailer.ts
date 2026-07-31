@@ -64,11 +64,24 @@ function getTransporter(): nodemailer.Transporter | null {
   // Not yet created — build from env
   if (!SMTP_HOST) return null;
 
+  let port = SMTP_PORT;
+  let secure = SMTP_PORT === 465;
+  let requireTLS = SMTP_PORT === 587;
+
+  // Force port 465 (SSL) for Gmail.
+  // Railway often blocks port 587 (STARTTLS) to prevent spam, resulting in ETIMEDOUT.
+  // Port 465 bypasses this because it is standard SSL.
+  if (SMTP_HOST.includes("gmail")) {
+    port = 465;
+    secure = true;
+    requireTLS = false;
+  }
+
   transporter = nodemailer.createTransport({
     host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465, // true for 465, false for 587
-    requireTLS: SMTP_PORT === 587, // force STARTTLS for 587
+    port,
+    secure,
+    requireTLS,
     auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
   });
 
