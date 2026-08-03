@@ -2,7 +2,7 @@ import express from "express";
 import dns from "dns";
 
 // Force Node.js to use IPv4 for network resolution. 
-// Fixes silent ETIMEDOUT issues when connecting to Google SMTP from Railway instances that have broken IPv6 routing.
+// Fixes silent ETIMEDOUT issues from Railway instances that have broken IPv6 routing.
 dns.setDefaultResultOrder("ipv4first");
 import cors from "cors";
 import helmet from "helmet";

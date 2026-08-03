@@ -28,12 +28,6 @@ export interface SendEmailOptions {
   references?: string;
 }
 
-const SMTP_HOST = process.env.SMTP_HOST;
-const SMTP_PORT = parseInt(process.env.SMTP_PORT || "587", 10);
-const SMTP_USER = process.env.SMTP_USER || "";
-const SMTP_PASS = process.env.SMTP_PASS || "";
-const SMTP_FROM = process.env.SMTP_FROM || process.env.SMTP_USER || "support@helpdesk.local";
-
 // Sentinel used by _setTransporterForTest to represent "explicitly disabled"
 const DISABLED = Symbol("DISABLED");
 
@@ -62,27 +56,21 @@ function getTransporter(): nodemailer.Transporter | null {
   // Already created
   if (transporter !== null) return transporter;
   // Not yet created — build from env
-  if (!SMTP_HOST) return null;
+  const host = process.env.SMTP_HOST;
+  if (!host) return null;
 
-  let port = SMTP_PORT;
-  let secure = SMTP_PORT === 465;
-  let requireTLS = SMTP_PORT === 587;
-
-  // Force port 465 (SSL) for Gmail.
-  // Railway often blocks port 587 (STARTTLS) to prevent spam, resulting in ETIMEDOUT.
-  // Port 465 bypasses this because it is standard SSL.
-  if (SMTP_HOST.includes("gmail")) {
-    port = 465;
-    secure = true;
-    requireTLS = false;
-  }
+  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const user = process.env.SMTP_USER || "";
+  const pass = process.env.SMTP_PASS || "";
+  const secure = port === 465;
+  const requireTLS = port === 587;
 
   transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
+    host,
     port,
     secure,
     requireTLS,
-    auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
+    auth: user && pass ? { user, pass } : undefined,
   });
 
   return transporter;
@@ -140,9 +128,11 @@ export async function sendOutboundEmail(options: SendEmailOptions): Promise<bool
     return false;
   }
 
+  const fromAddress = process.env.SMTP_FROM || process.env.SMTP_USER || "support@helpdesk.local";
+
   try {
     const info = await mailTransporter.sendMail({
-      from: SMTP_FROM,
+      from: fromAddress,
       to,
       subject: formattedSubject,
       text,

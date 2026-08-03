@@ -17,28 +17,32 @@ const getSenderConfig = (msg: Message) => {
   if (type === "CUSTOMER") {
     return {
       label: "Customer",
-      icon: <User className="h-3.5 w-3.5" />,
-      styles: "bg-card border text-card-foreground",
+      icon: <User className="h-3.5 w-3.5 text-muted-foreground" />,
+      badgeClass: "bg-secondary text-secondary-foreground border border-border",
+      cardStyles: "bg-card border border-border text-card-foreground shadow-2xs",
     };
   }
   if (type === "ADMIN") {
     return {
       label: "Admin",
-      icon: <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" />,
-      styles: "bg-indigo-500/10 text-foreground ml-auto border border-indigo-500/20",
+      icon: <ShieldCheck className="h-3.5 w-3.5 text-[#4338CA]" />,
+      badgeClass: "badge-open",
+      cardStyles: "bg-card border border-border text-card-foreground ml-auto shadow-2xs",
     };
   }
   if (type === "AI") {
     return {
       label: "AI Support",
-      icon: <Bot className="h-3.5 w-3.5 text-violet-500" />,
-      styles: "bg-violet-500/10 text-violet-900 dark:text-violet-200 ml-auto border border-violet-500/20",
+      icon: <Bot className="h-3.5 w-3.5 text-[#7C3AED]" />,
+      badgeClass: "badge-ai",
+      cardStyles: "bg-card border border-border text-card-foreground ml-auto shadow-2xs",
     };
   }
   return {
     label: "Agent",
-    icon: <Headset className="h-3.5 w-3.5 text-primary" />,
-    styles: "bg-primary/10 text-foreground ml-auto border border-primary/20",
+    icon: <Headset className="h-3.5 w-3.5 text-[#4338CA]" />,
+    badgeClass: "badge-open",
+    cardStyles: "bg-card border border-border text-card-foreground ml-auto shadow-2xs",
   };
 };
 
@@ -47,20 +51,29 @@ function MessageItem({ message }: { message: Message }) {
   const rawContent = message.bodyHtml || message.body;
   const sanitizedContent = DOMPurify.sanitize(rawContent);
   return (
-    <div className={`rounded-xl p-4 max-w-[80%] shadow-sm ${config.styles}`}>
-      <div className="flex items-center gap-2 mb-2">
-        <span className="text-xs font-semibold flex items-center gap-1.5">
-          {config.icon} {config.label}
+    <div className={`rounded-xl p-4 max-w-[85%] ${config.cardStyles}`}>
+      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/60">
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-semibold ${config.badgeClass}`}>
+          {config.icon}
+          {config.label}
         </span>
         {message.senderEmail && (
-          <span className="text-xs opacity-60">({message.senderEmail})</span>
+          <span className="text-xs text-muted-foreground font-normal">
+            ({message.senderEmail})
+          </span>
         )}
-        <span className="text-xs opacity-50 ml-auto">
-          {new Date(message.createdAt).toLocaleString()}
+        <span className="text-[11px] text-muted-foreground ml-auto font-medium">
+          {new Date(message.createdAt).toLocaleString(undefined, {
+            month: "numeric",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          })}
         </span>
       </div>
       <div
-        className="text-sm leading-relaxed whitespace-pre-wrap"
+        className="text-sm text-foreground leading-relaxed whitespace-pre-wrap font-normal"
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
     </div>

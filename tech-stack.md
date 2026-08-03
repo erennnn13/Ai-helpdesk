@@ -51,7 +51,7 @@ Used for:
 
 | Direction | Technology | Notes |
 |-----------|-----------|-------|
-| **Outbound** | Nodemailer (SMTP) | Sending replies to customers |
+| **Outbound** | Nodemailer (Postmark SMTP) | Sending replies to customers |
 | **Inbound** | TBD | Options: SendGrid Inbound Parse, Mailgun Routes, or IMAP polling |
 
 
