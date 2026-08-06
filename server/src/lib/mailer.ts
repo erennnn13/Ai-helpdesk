@@ -59,11 +59,11 @@ function getTransporter(): nodemailer.Transporter | null {
   const host = process.env.SMTP_HOST;
   if (!host) return null;
 
-  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const port = parseInt(process.env.SMTP_PORT || "2525", 10);
   const user = process.env.SMTP_USER || "";
   const pass = process.env.SMTP_PASS || "";
   const secure = port === 465;
-  const requireTLS = port === 587;
+  const requireTLS = port === 587 || port === 2525 || port === 25;
 
   transporter = nodemailer.createTransport({
     host,

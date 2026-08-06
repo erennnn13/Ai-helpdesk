@@ -15,9 +15,11 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
+  const agentEmail = process.env.AGENT_EMAIL;
+  const agentPassword = process.env.AGENT_PASSWORD;
 
-  if (!email || !password) {
-    console.error("❌ ADMIN_EMAIL and ADMIN_PASSWORD must be set in .env");
+  if (!email || !password || !agentEmail || !agentPassword) {
+    console.error("❌ ADMIN_EMAIL, ADMIN_PASSWORD, AGENT_EMAIL, and AGENT_PASSWORD must be set in .env");
     process.exit(1);
   }
 
@@ -50,8 +52,7 @@ async function main() {
   console.log(`✅ Admin user seeded: ${admin.email} (role: ${admin.role})`);
 
   // ─── Upsert agent user ────────────────────────────────
-  const agentEmail = "agent@example.com";
-  const agentPasswordHash = await bcrypt.hash("password123", 12);
+  const agentPasswordHash = await bcrypt.hash(agentPassword, 12);
 
   const agent = await prisma.user.upsert({
     where: { email: agentEmail },
